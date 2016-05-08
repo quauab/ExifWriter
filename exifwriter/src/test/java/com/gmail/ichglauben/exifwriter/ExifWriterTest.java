@@ -2,6 +2,7 @@ package com.gmail.ichglauben.exifwriter;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,38 +16,50 @@ import org.junit.Test;
 import com.gmail.ichglauben.exifreader.core.concretes.ExifReader;
 import com.gmail.ichglauben.exifwriter.core.concretes.ExifWriter;
 import com.gmail.ichglauben.exifwriter.core.utils.abstracts.CustomClass;
+import com.gmail.ichglauben.exifwriter.core.utils.concretes.FileExtensionExtractor;
+import com.gmail.ichglauben.exifwriter.core.utils.concretes.FileNameExtractor;
 import com.gmail.ichglauben.exifwriter.core.utils.concretes.GlobalConstants;
 
 public class ExifWriterTest extends CustomClass {
 	ExifWriter ew = new ExifWriter();
 	ExifReader er = new ExifReader();
-	static String img1 = "K:\\media\\graphics\\jpegs\\cats\\lynxs\\lynx_2.jpg";
+	
+	ClassLoader classLoader = getClass().getClassLoader();
+	File img1 = new File(classLoader.getResource("lynx_2.jpg").getFile());
+	File img2 = new File(classLoader.getResource("lynx_3.jpg").getFile());
+	
 	TagInfo artist = TiffConstants.EXIF_TAG_ARTIST;
 	TagInfo gps = TiffConstants.EXIF_TAG_GPSINFO;
 	
 	@Test
 	public void testEditTags() throws URISyntaxException {		
-		Path jpg1 = Paths.get(img1);
-		List<String> tags = null;
+		Path jpg1 = img1.toPath();
+		Path jpg2 = img2.toPath();
+		
+		List<String> tags1 = null;
+		List<String> tags2 = null;
 				
-		assertTrue("list is null",(null != (tags = er.getList(jpg1))));
-		
-		print(jpg1.getFileName() + " metadata");
-		for (String tag:tags) {
-			print(tag);
-		}
-		print("");
-		
+		String name1 = FileNameExtractor.extract(jpg1) + FileExtensionExtractor.extractExtension(jpg1);
+		String name2 = FileNameExtractor.extract(jpg1) + FileExtensionExtractor.extractExtension(jpg2);
+				
 		HashMap<String,TagInfo> meta = new HashMap<String,TagInfo>();
 		meta.put("rick walker", artist);
 		meta.put("-34.0033,71.2",gps);
 		
 		assertTrue("Failed to edit " + jpg1.getFileName(),ew.editTags(jpg1, meta));
-		print("Added artist and gps information to " + jpg1.getFileName());
-		tags = er.getList(GlobalConstants.USRHOME + "lynx_2.jpg");
+		assertTrue("Failed to edit " + jpg2.getFileName(), ew.editTags(jpg2, meta));		
+		assertTrue("List is null",(null != (tags1 = er.getList(GlobalConstants.USRHOME + name1))));
+		assertTrue("List is null",(null != (tags2 = er.getList(GlobalConstants.USRHOME + name2))));
 		
-		print(jpg1.getFileName() + " metadata");
-		for (String tag:tags) {
+		print("\t\t" + jpg1.getFileName() + " metadata");
+		for (String tag:tags1) {
+			print(tag);
+		}
+		
+		print("\n");		
+		
+		print("\t\t" + jpg2.getFileName() + " metadata");
+		for (String tag:tags2) {
 			print(tag);
 		}
 	}
