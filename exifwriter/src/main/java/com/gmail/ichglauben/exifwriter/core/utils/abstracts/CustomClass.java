@@ -40,25 +40,12 @@ public abstract class CustomClass {
 		return;
 	}
 
-	public static void print(String string) {
-		if (null != string) {
-			if (!new String(string).isEmpty()) {
-				System.out.println(string);
-			}
-		}
+	public static void print(Object o) {
+		System.out.print(String.valueOf(o));
 	}
 
-	public static void print(Object string) {
-		String temp = null;
-		if (null != (temp = String.valueOf(string))) {
-			print(temp);
-		} else if (null == temp) {
-			try {
-				temp = string.toString();
-			} catch (Exception exception) {
-				return;
-			}
-		}
+	public static void println(Object o) {
+		System.out.println(String.valueOf(o));
 	}
 
 	public static List<String> makeList(Map<String, String> hash) {

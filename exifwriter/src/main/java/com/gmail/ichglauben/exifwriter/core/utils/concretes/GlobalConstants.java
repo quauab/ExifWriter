@@ -10,4 +10,6 @@ public class GlobalConstants {
 	public final static String LINESEPARATOR = System.getProperty("line.separator");
 	public final static String USRDIR = System.getProperty("user.dir") + FILESEPARATOR;
 	public final static String USRHOME = System.getProperty("user.home") + FILESEPARATOR;
+	
+	public final static String EDITED_JPEGS = "_edited_jpegs" + FILESEPARATOR;
 }

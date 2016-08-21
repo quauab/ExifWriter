@@ -24,5 +24,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/_/Dropbox/Private/development/desktop/java/_demos/maven/libs/exifreader.jar"/>
+	<classpathentry kind="lib" path="D:/_/Dropbox/Private/development/desktop/java/_demos/maven/libs/fileextensionextractor.jar"/>
+	<classpathentry kind="lib" path="D:/_/Dropbox/Private/development/desktop/java/_demos/maven/libs/filenameextractor.jar"/>
+	<classpathentry kind="lib" path="D:/_/Dropbox/Private/development/desktop/java/_demos/maven/libs/filecopier.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
