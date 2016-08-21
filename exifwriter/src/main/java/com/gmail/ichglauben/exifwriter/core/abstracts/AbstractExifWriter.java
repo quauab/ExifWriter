@@ -53,8 +53,10 @@ public abstract class AbstractExifWriter {
 		boolean copyDirExists = false;
 		
 		/**	STEPS:
-		 * 			1. remove the removableTags
-		 * 			2. save the edited file to the copy directory*/
+		 * 			1. create the copy directory if it does not exist
+		 * 			2. delete the file if it exist
+		 * 			3. remove the removableTags
+		 * 			4. save the edited file to the copy directory*/
 		
 		
 		String fileName = jpegImageFile.getFileName().toString();
@@ -62,11 +64,11 @@ public abstract class AbstractExifWriter {
 		String copyDestination = copyPath + GlobalConstants.EDITED_JPEGS;
 		String fileCopy = copyDestination + fileName;
 		
-		// 0. create the copy directory, if it does not exist
+		// 1. create the copy directory, if it does not exist
 		if (!PathValidator.pathExists(copyDestination))
 			copyDirExists = new File(copyDestination).mkdir();
 		
-		// 1. delete the file if it exist
+		// 2. delete the file if it exist
 		if (PathValidator.isAFile(fileCopy))
 			try {
 				Files.delete(Paths.get(fileCopy));
@@ -91,7 +93,7 @@ public abstract class AbstractExifWriter {
 			if (null == outputSet)
 				outputSet = new TiffOutputSet();
 
-			// 1. remove the removableTags
+			// 3. remove the removableTags
 			{
 				TiffOutputField tof = null;
 				for (TagInfo tagInfo : removableTags) {
@@ -102,7 +104,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 
-			// 2. now write the edited file to the copy directory
+			// 4. now write the edited file to the copy directory
 			
 			os = new FileOutputStream(fileCopy);
 			os = new BufferedOutputStream(os);
@@ -132,20 +134,22 @@ public abstract class AbstractExifWriter {
 		boolean copyDirExists = false;
 		
 		/**	STEPS:
-		 * 			1. remove the editableTags
-		 * 			2. write the new tag values
-		 * 			3. save the edited file to the copy directory*/
+		 * 			1. create the copy directory if it does not exist
+		 * 			2. delete the file if it exist
+		 * 			3. remove the editableTags
+		 * 			4. write the new tag values
+		 * 			5. save the edited file to the copy directory*/
 				
 		String fileName = jpegImageFile.getFileName().toString();
 		String copyPath = GlobalConstants.USRHOME;
 		String copyDestination = copyPath + GlobalConstants.EDITED_JPEGS;
 		String fileCopy = copyDestination + fileName;
 		
-		// 0. create the copy directory, if it does not exist
+		// 1. create the copy directory, if it does not exist
 		if (!PathValidator.pathExists(copyDestination))
 			copyDirExists = new File(copyDestination).mkdir();
 		
-		// 1. delete the file if it exist
+		// 2. delete the file if it exist
 		if (PathValidator.isAFile(fileCopy))
 			try {
 				Files.delete(Paths.get(fileCopy));
@@ -170,7 +174,7 @@ public abstract class AbstractExifWriter {
 			if (null == outputSet)
 				outputSet = new TiffOutputSet();
 			
-			// 1. first remove the current tags, if they exist ....
+			// 3. first remove the current tags, if they exist ....
 			{
 				TiffOutputField tof = null;
 				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
@@ -182,7 +186,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 
-			// 2. and write the new tags here
+			// 4. and write the new tags here
 			{
 				TiffOutputField tof = null;
 				TiffOutputDirectory exifDir = null;
@@ -211,7 +215,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 
-			// 3. now write the edited file to the copy directory
+			// 5. now write the edited file to the copy directory
 			os = new FileOutputStream(fileCopy);
 			os = new BufferedOutputStream(os);
 			new ExifRewriter().updateExifMetadataLossless(jpegImageFile.toFile(), os, outputSet);
@@ -241,21 +245,23 @@ public abstract class AbstractExifWriter {
 		boolean copyDirExists = false;
 		
 		/**	STEPS:
-		 * 			1. remove the editableTags
-		 * 			2. remove the removableTags
-		 * 			3. write the new tag values
-		 * 			4. save the edited file to the copy directory*/
+		 * 			1. create the copy if it does not exist
+		 * 			2. delete the file if it exist
+		 * 			3. remove the editableTags
+		 * 			4. remove the removableTags
+		 * 			5. write the new tag values
+		 * 			6. save the edited file to the copy directory*/
 		
 		String fileName = jpegImageFile.getFileName().toString();
 		String copyPath = GlobalConstants.USRHOME;
 		String copyDestination = copyPath + GlobalConstants.EDITED_JPEGS;
 		String fileCopy = copyDestination + fileName;
 		
-		// 0. create the copy directory, if it does not exist
+		// 1. create the copy directory, if it does not exist
 		if (!PathValidator.pathExists(copyDestination))
 			copyDirExists = new File(copyDestination).mkdir();
 		
-		// 1. delete the file if it exist
+		// 2. delete the file if it exist
 		if (PathValidator.isAFile(fileCopy))
 			try {
 				Files.delete(Paths.get(fileCopy));
@@ -280,7 +286,7 @@ public abstract class AbstractExifWriter {
 			if (null == outputSet)
 				outputSet = new TiffOutputSet();
 			
-			// 1. remove the editableTags
+			// 3. remove the editableTags
 			{
 				TiffOutputField tof = null;
 				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
@@ -292,7 +298,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 			
-			// 2. remove the removableTags
+			// 4. remove the removableTags
 			{
 				TiffOutputField tof = null;
 				for (TagInfo tagInfo : removableTags) {
@@ -303,7 +309,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 
-			// 3. write the new tags here
+			// 5. write the new tags here
 			{
 				TiffOutputField tof = null;
 				TiffOutputDirectory exifDir = null;
@@ -332,7 +338,7 @@ public abstract class AbstractExifWriter {
 				}
 			}
 
-			// 4. write the edited file to the copy directory
+			// 6. write the edited file to the copy directory
 			os = new FileOutputStream(fileCopy);
 			os = new BufferedOutputStream(os);
 
@@ -362,21 +368,21 @@ public abstract class AbstractExifWriter {
 		boolean copyDirExists = false;
 		
 		/** STEPS:
-		 * 		0. create the copy directory if it does not exist
-		 * 		1. check and delete the file if it exist
-		 * 		2. save the edited file to the copy directory
-		 * 		3. remove all metadata from file*/
+		 * 		1. create the copy directory if it does not exist
+		 * 		2. check and delete the file if it exist
+		 * 		3. save the edited file to the copy directory
+		 * 		4. remove all metadata from file*/
 
 		String fileName = jpegImageFile.toPath().getFileName().toString();
 		String copyPath = GlobalConstants.USRHOME;
 		String copyDestination = copyPath + GlobalConstants.EDITED_JPEGS;
 		String fileCopy = copyDestination + fileName;
 
-		// 0. create the copy directory, if it does not exist
+		// 1. create the copy directory, if it does not exist
 		if (!PathValidator.pathExists(copyDestination))
 			copyDirExists = new File(copyDestination).mkdir();
 
-		// 1. delete the file if it exist
+		// 2. delete the file if it exist
 		if (PathValidator.isAFile(fileCopy))
 			try {
 				Files.delete(Paths.get(fileCopy));
@@ -384,12 +390,12 @@ public abstract class AbstractExifWriter {
 				ioe.printStackTrace();
 			}
 
-		// 2. save file to edit directory
+		// 3. save file to edit directory
 		try {
 			os = new FileOutputStream(fileCopy);
 			os = new BufferedOutputStream(os);
 			
-			// 3. remove all metadata from file
+			// 4. remove all metadata from file
 			new ExifRewriter().removeExifMetadata(jpegImageFile, os);
 			succeeded = true;
 			return succeeded;
