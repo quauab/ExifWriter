@@ -33,6 +33,24 @@ public class ExifWriterTest extends CustomClass {
 	TagInfo dateTime = TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL;
 	
 	@Test
+	public void testEditGPSTags() {
+		er.read(img4);
+		println(img4.toPath().getFileName() + "'s metadata before edit\n");
+		er.printResults();
+		
+		println("\nWill add GPS data to " + img4.toPath().getFileName() + "\n");
+		HashMap<String,TagInfo> tags = new HashMap<String,TagInfo>();
+		tags.put("-75.1453983,40.041812",gps);
+		
+		assertTrue(img4.toPath().getFileName() + " unedited", ew.editTags(img4.toPath(), tags));
+		
+		print(img4.toPath().getFileName() + "'s new data\n");
+		
+		er.read(GlobalConstants.USRHOME + GlobalConstants.EDITED_JPEGS + img4.toPath().getFileName());
+		er.printResults();
+	}
+	
+	@Test
 	public void testRemoveTags() {
 		er.read(img3);
 		
