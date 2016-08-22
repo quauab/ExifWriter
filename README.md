@@ -20,4 +20,4 @@ Write new data to jpeg's exchange information. This project contains an abstract
 Worked a previous project where the program can read jpeg's metadata. I was inspired to create a Java library that could edit a jpeg's exchange information and uploaded to Github as reference or possible Java library for others.
 
 <h2>Issues</h2>
-Editing the GPS tags produces an "unknown tag" discrepancy but the changes will still succeed.
+Editing the GPS tags results in an "unknown tag" discrepancy but the editing does succeed
