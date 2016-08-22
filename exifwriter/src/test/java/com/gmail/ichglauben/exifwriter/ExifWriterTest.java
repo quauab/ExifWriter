@@ -33,7 +33,7 @@ public class ExifWriterTest extends CustomClass {
 	TagInfo dateTime = TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL;
 	
 	@Test
-	public void testEditGPSTags() {
+	public void testEtditGPSTags() {
 		er.read(img4);
 		println(img4.toPath().getFileName() + "'s metadata before edit\n");
 		er.printResults();

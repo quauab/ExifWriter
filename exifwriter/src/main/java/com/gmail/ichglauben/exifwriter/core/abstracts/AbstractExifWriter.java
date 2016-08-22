@@ -202,8 +202,8 @@ public abstract class AbstractExifWriter {
 					} else if (val == TiffConstants.EXIF_TAG_GPSINFO) {
 						try {
 							String[] gps = key.split(",");
-							final double longitude = Double.parseDouble(gps[0]);
-							final double latitude = Double.parseDouble(gps[1]);
+							final Double longitude = Double.parseDouble(gps[0]);
+							final Double latitude = Double.parseDouble(gps[1]);
 							outputSet.setGPSInDegrees(longitude, latitude);
 						} catch (Exception e) {
 							continue;
