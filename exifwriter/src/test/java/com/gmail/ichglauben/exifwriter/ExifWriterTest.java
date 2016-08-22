@@ -40,7 +40,7 @@ public class ExifWriterTest extends CustomClass {
 		
 		println("\nWill add GPS data to " + img4.toPath().getFileName() + "\n");
 		HashMap<String,TagInfo> tags = new HashMap<String,TagInfo>();
-		tags.put("-75.1453983,40.041812",gps);
+		tags.put("35.1453983,-15.041812",gps);
 		
 		assertTrue(img4.toPath().getFileName() + " unedited", ew.editTags(img4.toPath(), tags));
 		
