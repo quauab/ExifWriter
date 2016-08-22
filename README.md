@@ -13,6 +13,10 @@ Write new data to jpeg's exchange information. This project contains an abstract
 <h2>Dependencies</h2>
 <ul>
   <li>Sanselan 0.97-incubator</li>
+</ul>
+
+<h2>Optional Dependencies</h2>
+<ul>
   <li>ExifReader</li>
 </ul>
 
