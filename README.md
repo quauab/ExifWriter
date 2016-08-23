@@ -17,7 +17,7 @@ Write new data to jpeg's exchange information. This project contains an abstract
 
 <h2>Optional Dependencies</h2>
 <ul>
-  <li>ExifReader</li>
+  <li><a target="_blank" href="https://github.com/quauab/ExifReader">ExifReader</a></li>
 </ul>
 
 <h2>Motivation</h2>
