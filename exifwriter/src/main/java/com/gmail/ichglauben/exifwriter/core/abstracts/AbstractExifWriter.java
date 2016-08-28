@@ -245,7 +245,7 @@ public abstract class AbstractExifWriter {
 		boolean copyDirExists = false;
 		
 		/**	STEPS:
-		 * 			1. create the copy if it does not exist
+		 * 			1. create the copy directory if it does not exist
 		 * 			2. delete the file if it exist
 		 * 			3. remove the editableTags
 		 * 			4. remove the removableTags
