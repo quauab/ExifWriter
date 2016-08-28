@@ -1,5 +1,5 @@
 # Jpeg Metadata Writer
-Write new data to jpeg's exchange information. This project contains an abstract class and a concrete sub-class. The parent has 4 methods that facilitates editing jpeg files: remove a specific tag, edit a specific tag, edit & remove specific tags and remove all tag values.
+Write to jpeg files. A Java solution for writing values to a jpeg's exchange information tags. It contains an abstract base class and a child class.
 
 <h2>Installation</h2>
 <ol>
@@ -13,7 +13,11 @@ Write new data to jpeg's exchange information. This project contains an abstract
 <h2>Dependencies</h2>
 <ul>
   <li>Sanselan 0.97-incubator</li>
-  <li>ExifReader</li>
+</ul>
+
+<h2>Optional Dependencies</h2>
+<ul>
+  <li><a target="_blank" href="https://github.com/quauab/ExifReader">ExifReader</a></li>
 </ul>
 
 <h2>Motivation</h2>
