@@ -128,7 +128,7 @@ public abstract class AbstractExifWriter {
 		}
 	}
 
-	public static boolean editTags(Path jpegImageFile, HashMap<String, TagInfo> editableTags) {
+	public static boolean editTags(Path jpegImageFile, HashMap<TagInfo, String> editableTags) {
 		OutputStream os = null;
 		boolean succeeded = false;
 		boolean copyDirExists = false;
@@ -177,11 +177,11 @@ public abstract class AbstractExifWriter {
 			// 3. first remove the current tags, if they exist ....
 			{
 				TiffOutputField tof = null;
-				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
-					TagInfo val = ((TagInfo) me.getValue());
-					tof = outputSet.findField(val);
+				for (Entry<TagInfo, String> me : editableTags.entrySet()) {
+					TagInfo key = ((TagInfo) me.getKey());
+					tof = outputSet.findField(key);
 					if (null != tof) {
-						outputSet.removeField(val);
+						outputSet.removeField(key);
 					}
 				}
 			}
@@ -191,17 +191,17 @@ public abstract class AbstractExifWriter {
 				TiffOutputField tof = null;
 				TiffOutputDirectory exifDir = null;
 
-				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
-					String key = ((String) me.getKey());
-					TagInfo val = ((TagInfo) me.getValue());
-					tof = new TiffOutputField(val, TiffFieldTypeConstants.FIELD_TYPE_ASCII, key.length(),
-							key.getBytes());
-					if (val == TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL) {
+				for (Entry<TagInfo, String> me : editableTags.entrySet()) {
+					String value = ((String) me.getValue());
+					TagInfo key = ((TagInfo) me.getKey());
+					tof = new TiffOutputField(key, TiffFieldTypeConstants.FIELD_TYPE_ASCII, value.length(),
+							value.getBytes());
+					if (key == TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL) {
 						exifDir = outputSet.getOrCreateExifDirectory();
 						exifDir.add(tof);
-					} else if (val == TiffConstants.EXIF_TAG_GPSINFO) {
+					} else if (key == TiffConstants.EXIF_TAG_GPSINFO) {
 						try {
-							String[] gps = key.split(",");
+							String[] gps = value.split(",");
 							final Double longitude = Double.parseDouble(gps[0]);
 							final Double latitude = Double.parseDouble(gps[1]);
 							outputSet.setGPSInDegrees(longitude, latitude);
@@ -238,7 +238,7 @@ public abstract class AbstractExifWriter {
 		}
 	}
 
-	public static boolean editAndRemoveTags(Path jpegImageFile, HashMap<String, TagInfo> editableTags,
+	public static boolean editAndRemoveTags(Path jpegImageFile, HashMap<TagInfo, String> editableTags,
 			ArrayList<TagInfo> removableTags) {
 		OutputStream os = null;
 		boolean succeeded = false;
@@ -289,11 +289,11 @@ public abstract class AbstractExifWriter {
 			// 3. remove the editableTags
 			{
 				TiffOutputField tof = null;
-				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
-					TagInfo val = ((TagInfo) me.getValue());
-					tof = outputSet.findField(val);
+				for (Entry<TagInfo, String> me : editableTags.entrySet()) {
+					TagInfo key = ((TagInfo) me.getKey());
+					tof = outputSet.findField(key);
 					if (null != tof) {
-						outputSet.removeField(val);
+						outputSet.removeField(key);
 					}
 				}
 			}
@@ -314,19 +314,19 @@ public abstract class AbstractExifWriter {
 				TiffOutputField tof = null;
 				TiffOutputDirectory exifDir = null;
 
-				for (Entry<String, TagInfo> me : editableTags.entrySet()) {
-					String key = ((String) me.getKey());
-					TagInfo val = ((TagInfo) me.getValue());
-					tof = new TiffOutputField(val, TiffFieldTypeConstants.FIELD_TYPE_ASCII, key.length(),
-							key.getBytes());
-					if (val == TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL) {
+				for (Entry<TagInfo, String> me : editableTags.entrySet()) {
+					String value = ((String) me.getValue());
+					TagInfo key = ((TagInfo) me.getKey());
+					tof = new TiffOutputField(key, TiffFieldTypeConstants.FIELD_TYPE_ASCII, value.length(),
+							value.getBytes());
+					if (key == TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL) {
 						exifDir = outputSet.getOrCreateExifDirectory();
 						exifDir.add(tof);
-					} else if (val == TiffConstants.EXIF_TAG_GPSINFO) {
+					} else if (key == TiffConstants.EXIF_TAG_GPSINFO) {
 						try {
-							String[] gps = key.split(",");
-							final double longitude = Double.parseDouble(gps[0]);
-							final double latitude = Double.parseDouble(gps[1]);
+							String[] gps = value.split(",");
+							final Double longitude = Double.parseDouble(gps[0]);
+							final Double latitude = Double.parseDouble(gps[1]);
 							outputSet.setGPSInDegrees(longitude, latitude);
 						} catch (Exception e) {
 							continue;

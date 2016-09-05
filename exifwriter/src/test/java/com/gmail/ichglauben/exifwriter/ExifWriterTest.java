@@ -33,14 +33,14 @@ public class ExifWriterTest extends CustomClass {
 	TagInfo dateTime = TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL;
 	
 	@Test
-	public void testEtditGPSTags() {
+	public void testEditGPSTags() {
 		er.read(img4);
 		println(img4.toPath().getFileName() + "'s metadata before edit\n");
 		er.printResults();
 		
 		println("\nWill add GPS data to " + img4.toPath().getFileName() + "\n");
-		HashMap<String,TagInfo> tags = new HashMap<String,TagInfo>();
-		tags.put("35.1453983,-15.041812",gps);
+		HashMap<TagInfo, String> tags = new HashMap<TagInfo, String>();
+		tags.put(gps,"35.1453983,-15.041812");
 		
 		assertTrue(img4.toPath().getFileName() + " unedited", ew.editTags(img4.toPath(), tags));
 		
@@ -75,8 +75,8 @@ public class ExifWriterTest extends CustomClass {
 		println(img1.toPath().getFileName() + "'s metadata before editing\nWill be adding an artist\n");
 		er.printResults();
 		
-		HashMap<String,TagInfo> tags = new HashMap<String,TagInfo>();
-		tags.put("Rick Walker", artist);
+		HashMap<TagInfo, String> tags = new HashMap<TagInfo, String>();
+		tags.put(artist,"Rick Walker");
 		
 		assertTrue(img1.toPath().getFileName() + " unedited", ew.editTags(img1.toPath(), tags));
 		
@@ -96,8 +96,8 @@ public class ExifWriterTest extends CustomClass {
 		ArrayList<TagInfo> remove = new ArrayList<TagInfo>();
 		remove.add(dateTime);
 		
-		HashMap<String,TagInfo> edit = new HashMap<String,TagInfo>();
-		edit.put("Anita Bathe", artist);
+		HashMap<TagInfo, String> edit = new HashMap<TagInfo, String>();
+		edit.put(artist,"Anita Bathe");
 		
 		assertTrue(img5.toPath().getFileName() + " undedted", ew.editAndRemoveTags(img5.toPath(), edit, remove));
 		
