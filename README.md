@@ -1,5 +1,5 @@
 # Jpeg Metadata Writer
-Write to jpeg files. A Java solution for writing values to a jpeg's exchange information tags. It contains an abstract base class and a child class.
+Edit jpeg metadata.
 
 <h2>Installation</h2>
 <ol>
